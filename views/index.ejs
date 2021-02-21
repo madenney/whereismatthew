@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Where Is Matthew?</title>
+  <meta name="author" content="Matt Denney">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <%- include('./header.ejs')%>
+    <h1 id='title'>Hello</h1>
+    <p>var: <%= JSON.stringify(data) %></p>
+    <script>
+      <%- include('./script.js')%>
+    </script>
+</body>
+</html>
+
