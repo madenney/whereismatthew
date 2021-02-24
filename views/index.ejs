@@ -12,12 +12,21 @@
 </head>
 
 <body>
-    <%- include('./header.ejs')%>
-    <h1 id='title'>Hello</h1>
-    <p>var: <%= JSON.stringify(data) %></p>
-    <script>
-      <%- include('./script.js')%>
-    </script>
+  <div id='addressBox'>
+    <% if(data.trak4Data.GPS_speed == 0 ){ %>
+      <div>Matthew is parked at
+       <%- data.googleData.formatted_address %>
+      </div>
+    <% } else { %>
+      <div> Matthew is driving <span id='direction'></span> at <span id='speed'></span> mph.</div>
+      <div> Currently in: <span id='movingLocation'></span></div>
+    <% } %>
+  </div>
+  <div id='updatedBox'>Last updated at: <span id='updatedAt'/></div>
+  <script>
+    const data = <%- JSON.stringify(data) %>
+    <%- include('./script.js')%>
+  </script>
 </body>
 </html>
 
