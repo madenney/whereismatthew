@@ -32,7 +32,9 @@ const main = function(){
 		$('#movingLocation').html(`${county}, ${state}`)
 	}
 
-	$('#updatedAt').html(trak4Data.updateTime)
+	const updatedAt = new Date(trak4Data.updateTime)
+	const adjustedDate = adjustForTimezone(updatedAt)
+	$('#updatedAt').html(adjustedDate.toTimeString())
 	initMap(trak4Data.latitude,trak4Data.longitude)
 
 	const isMobile = mobileCheck()
@@ -65,4 +67,8 @@ function mobileCheck() {
 	return check
 }
 
-
+function adjustForTimezone(date){
+	var timeOffsetInMS = date.getTimezoneOffset() * 60000
+	date.setTime(date.getTime() - timeOffsetInMS)
+	return date
+}
