@@ -34,14 +34,16 @@ const main = function(){
 
 	const updatedAt = new Date(trak4Data.updateTime)
 	const adjustedDate = adjustForTimezone(updatedAt)
-	$('#updatedAt').html(adjustedDate.toTimeString())
+	$('#updatedAt').html(toReadableTime(adjustedDate))
 	initMap(trak4Data.latitude,trak4Data.longitude)
 
 	const isMobile = mobileCheck()
 	if(isMobile){
 		$('#addressBox').css('font-size', '60px')
 	}
-	console.log('Don\'t look in here.')
+	setTimeout(()=>{
+		console.log('Don\'t look in here.')
+	},2000)
 }
 
 
@@ -51,14 +53,13 @@ main()
 function initMap(lat,lng) {
 	const loc = { lat, lng}
 	const map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 4,
+		zoom: 10,
 		center: loc,
 	})
 	new google.maps.Marker({
 		position: loc,
 		map: map,
 	})
-	map.setZoom(6)
 }
 
 function mobileCheck() {
@@ -71,4 +72,24 @@ function adjustForTimezone(date){
 	var timeOffsetInMS = date.getTimezoneOffset() * 60000
 	date.setTime(date.getTime() - timeOffsetInMS)
 	return date
+}
+
+function toReadableTime(d){
+
+
+	let tz = d.toTimeString()
+	tz = tz.slice(tz.indexOf('(')-1,tz.indexOf(')'))
+	let tzAbr = ''
+	for(let i = 0; i<tz.length;i++){
+		if((tz[i] >= 'A') && (tz[i] <= 'Z')){
+			tzAbr+=tz[i]
+		}
+	}
+
+	return `${d.getMonth()+1}/${d.getDate()} - ` +
+	`${('0' + (d.getHours())).slice(-2)}:` +
+    `${('0' + (d.getMinutes())).slice(-2)}:` +
+    `${('0' + (d.getSeconds())).slice(-2)}` +
+	` ${tzAbr}`
+
 }
